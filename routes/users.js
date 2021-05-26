@@ -2,16 +2,16 @@ var express = require('express');
 var router = express.Router();
 const { MongoClient } = require('mongodb');
 const uri = process.env.MONGODB_URI;
-const client = new MongoClient(uri);
 
 async function get() {
+    const client = new MongoClient(uri,{ useUnifiedTopology: true });
     try {
         await client.connect();
         const cursor = client.db('quest-i').collection('users').find();
         const results = await cursor.toArray();
-        console.log(results);
         return results
     } finally {
+        console.log('here');
         await client.close();
     }
 }
