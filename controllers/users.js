@@ -16,8 +16,8 @@ async function createUser(req, res) {
 async function loginUser(req, res) {
     const user = User(req.body);
     const dbUser = await User.findOne({username: user.username});
-    if (!dbUser) return res.send('Username does not exist');
-    if (!await bcrypt.compare(user.password, dbUser.password)) return res.send('Wrong password');
+    if (!dbUser) return res.send('Username does not exist!');
+    if (!await bcrypt.compare(user.password, dbUser.password)) return res.send('Wrong password!');
     const token = jwt.sign({_id: dbUser._id}, process.env.TOKEN_SECRET);
     res.cookie('auth-token', token);
     res.send('Success');

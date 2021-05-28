@@ -8,13 +8,14 @@
       <div id="header">
           <h1 class>Quest-i</h1>
       </div>
-      <nav class="navbar navbar-expand-lg bg-dark">
+      <nav>
           {{#unless authorized}}
-          <a class="nav-link text-white" href="/login">Login</a>
-          <a class="nav-link text-white" href="/register">Register</a>
+          <a class="{{#if active.login}}active{{/if}}" href="/login">Login</a>
+          <a class="{{#if active.register}}active{{/if}}" href="/register">Register</a>
           {{/unless}}
           {{#if authorized}}
-          {{user.username}}
+          <a href="/create">Create</a>
+          <p>{{user.username}}</p>
           {{/if}}
       </nav>
       <div>{{{body}}}</div>

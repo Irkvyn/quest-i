@@ -12,8 +12,12 @@ form.addEventListener('submit', (event) => {
     })
         .then(response => response.text())
         .then(message => {
-            if (message == 'Success') window.location.replace('/');
-            log.innerHTML = message
+            if (message == 'Success') {
+                window.location.replace('/')
+            } else {
+                log.innerHTML = message;
+                log.style.color = "red";
+            }
         });
     event.preventDefault();
 });

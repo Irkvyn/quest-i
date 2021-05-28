@@ -8,6 +8,13 @@ form.addEventListener('submit', (event) => {
             'username': form['username'].value,
             'password': form['password'].value
         })
-    }).then(data => data.text()).then(message => log.innerHTML = message);
+    }).then(data => data.text()).then(message => {
+        if (message == "Registered successfully!") {
+            log.style.color = "green";
+        } else {
+            log.style.color = "red";
+        }
+        log.innerHTML = message;
+    });
     event.preventDefault();
 });
