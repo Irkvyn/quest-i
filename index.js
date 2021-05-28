@@ -8,7 +8,7 @@ import cookieParser from 'cookie-parser';
 
 import usersRoutes from './routes/users.js';
 import appRoutes from './routes/app.js';
-import quizRoutes from './routes/quiz.js';
+import quizzesRoutes from './routes/quiz.js';
 
 const port = process.env.PORT || 5000;
 const __filename = fileURLToPath(import.meta.url);
@@ -24,7 +24,7 @@ app.use(logger('dev'));
 
 app.use('/', appRoutes);
 app.use('/users', usersRoutes);
-app.use('/quiz', quizRoutes);
+app.use('/quizzes', quizzesRoutes);
 
 app.use(express.static(path.join(__dirname, 'public')));
 

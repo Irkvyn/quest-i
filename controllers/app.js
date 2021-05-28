@@ -1,7 +1,8 @@
 import User from '../models/users.js';
 import bcrypt from 'bcrypt';
+import Quiz from '../models/quiz.js';
 
-async function getHome(req, res) {
+async function homeController(req, res) {
     try {
         const user = await User.findOne({_id: req.userId});
         res.render('index', {
@@ -15,16 +16,30 @@ async function getHome(req, res) {
     }
 }
 
-function getLoginForm(req, res) {
+function loginController(req, res) {
     res.render('login', {
         active: {login: true}
     });
 }
 
-function getRegisterForm(req, res) {
+function registerController(req, res) {
     res.render('register', {
         active: {register: true}
     });
 }
 
-export {getHome, getLoginForm, getRegisterForm};
+async function takeController(req, res) {
+    try {
+        const user = await User.findOne({_id: req.userId});
+        const quiz = await Quiz.findOne({_id: req.query.quiz});
+        res.render('take', {
+            authorized: true,
+            user: user,
+            quiz: quiz
+        });
+    } catch (err) {
+        res.status(404).send(err.message);
+    }
+}
+
+export {homeController, takeController, loginController, registerController};
