@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Quest-i</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+  </head>
+  <body>
+      <div id="header">
+          <h1 class>Quest-i</h1>
+      </div>
+      <nav class="navbar navbar-expand-lg bg-dark">
+          {{#unless authorized}}
+          <a class="nav-link text-white" href="/login">Login</a>
+          <a class="nav-link text-white" href="/register">Register</a>
+          {{/unless}}
+          {{#if authorized}}
+          {{user.username}}
+          {{/if}}
+      </nav>
+      <div>{{{body}}}</div>
+  </body>
+</html>
