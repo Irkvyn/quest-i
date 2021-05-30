@@ -15,6 +15,10 @@ const questionSchema = mongoose.Schema({
     quiz: {
         type: mongoose.Schema.ObjectId,
         ref: 'Quiz'
+    },
+    points: {
+        type: Number,
+        default: 1
     }
 });
 
