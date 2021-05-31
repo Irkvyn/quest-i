@@ -16,6 +16,19 @@ async function homeController(req, res) {
     }
 }
 
+async function historyController(req, res) {
+    try {
+        const user = await User.findOne({_id: req.userId});
+        res.render('history', {
+            authorized: true,
+            user: {username: user.username}
+        });
+    } catch (err) {
+        console.log(err);
+        res.redirect('/login');
+    }
+}
+
 function loginController(req, res) {
     res.render('login', {
         active: {login: true}
@@ -42,4 +55,4 @@ async function takeController(req, res) {
     }
 }
 
-export {homeController, takeController, loginController, registerController};
+export {homeController, takeController, loginController, registerController, historyController};

@@ -6,7 +6,7 @@ body {
 nav {
     background-color: coral;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     height: 35px;
 }
@@ -49,4 +49,18 @@ form.login input, form.register input{
 button#submit-button {
     width: 80px;
     margin-top: 20px;
+}
+
+.record {
+    display: flex;
+    flex-direction: row;
+}
+
+.record * {
+    margin-left: 60px;
+}
+
+#header a {
+    text-decoration: none;
+    color: black;
 }

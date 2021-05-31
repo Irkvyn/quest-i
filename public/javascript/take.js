@@ -11,11 +11,9 @@ start.onclick = (() => {
     })
         .then(response => response.text())
         .then(newSubmissionId => {
-            console.log(newSubmissionId);
             fetch(`/quizzes/${start.value}/questions`)
                 .then(response => response.json())
                 .then(questions => { 
-                    console.log(questions);
                     start.style.display = "none";
                     addQuestions(questions, JSON.parse(newSubmissionId));
                 });
@@ -65,11 +63,17 @@ function addQuestions(questions, newSubmissionId) {
             }
             reqBody.answers = answers;
             reqBody.submission = newSubmissionId;
-            console.log(JSON.stringify(reqBody));
             fetch(`/submissions/${newSubmissionId}`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'}, 
                 body: JSON.stringify(reqBody)
+            }).then(response => {
+                if (response.status == 200) {
+                    let message = document.createElement('p');
+                    message.style.color = 'green';
+                    message.innerHTML = 'Submitted successfully!';
+                    container.appendChild(message);
+                }
             });
         } catch (err) {
             console.log(err);

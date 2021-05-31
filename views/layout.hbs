@@ -6,16 +6,23 @@
   </head>
   <body>
       <div id="header">
-          <h1 class>Quest-i</h1>
+          <a href='/'><h1 class>Quest-i</h1></a>
       </div>
       <nav>
           {{#unless authorized}}
-          <a class="{{#if active.login}}active{{/if}}" href="/login">Login</a>
-          <a class="{{#if active.register}}active{{/if}}" href="/register">Register</a>
+          <div><p>&nbsp;</p></div>
+          <div>
+            <a class="{{#if active.login}}active{{/if}}" href="/login">Login</a>
+            <a class="{{#if active.register}}active{{/if}}" href="/register">Register</a>
+          </div>
           {{/unless}}
           {{#if authorized}}
-          <a href="/create">Create</a>
-          <p id='username'>{{user.username}}</p>
+          <div>
+            <a href="/history">History</a>
+          </div>
+          <div>
+            <p id='username'>{{user.username}}</p>
+          </div>
           {{/if}}
       </nav>
       <div>{{{body}}}</div>
