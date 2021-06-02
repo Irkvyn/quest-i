@@ -11,6 +11,7 @@ form.addEventListener('submit', (event) => {
     }).then(data => data.text()).then(message => {
         if (message == "Registered successfully!") {
             log.style.color = "green";
+            setTimeout(()=>window.location.replace('/login'), 2000);
         } else {
             log.style.color = "red";
         }

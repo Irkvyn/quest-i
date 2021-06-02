@@ -19,6 +19,12 @@ const questionSchema = mongoose.Schema({
     points: {
         type: Number,
         default: 1
+    },
+    questionType: {
+        type: String,
+        enum: ['single', 'multiple', 'text'],
+        required: true,
+        default: 'single'
     }
 });
 

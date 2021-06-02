@@ -29,7 +29,7 @@ const submissionSchema = mongoose.Schema({
             type: mongoose.Schema.ObjectId,
             ref: 'Question'
         },
-        value: String,
+        value: [String],
         isCorrect: {
             type: Boolean
         }
@@ -58,16 +58,44 @@ submissionSchema.pre('save', async function(next) {
 submissionSchema.methods.evaluate = async function() {
     this.score = 0;
     for (let answer of this.answers) {
-        let question = await Question.findOne({_id: answer.id})
-        let correctAnswer = null;
-        for (let choice of question.choices) {
-            if (choice.isCorrect) correctAnswer = {'text': choice.text, 'points': question.points};
-        }
-        if (answer.value == correctAnswer.text) {
-            this.score += correctAnswer.points;
-            answer.isCorrect = true;
-        } else {
-            answer.isCorrect = false;
+        let question = await Question.findOne({_id: answer.id});
+        let questionType = question.questionType;
+        switch (questionType) {
+            case 'text':
+                let correctAnswers = [];
+                for (let choice of question.choices) {
+                    if (choice.isCorrect) correctAnswers.push(choice.text);
+                }
+                if (correctAnswers.includes(answer.value[0])) {
+                    this.score += question.points;
+                    answer.isCorrect = true;
+                } else {
+                    answer.isCorrect = false;
+                }
+                break;
+            case 'single':
+                let correctAnswer = question.choices.filter((choice) => choice.isCorrect)[0].text;
+                if (answer.value[0] == correctAnswer) {
+                    this.score += question.points;
+                    answer.isCorrect = true;
+                } else {
+                    answer.isCorrect = false;
+                }
+                break;
+            case 'multiple':
+                answer.isCorrect = true;
+                let correctAnswersAll = [];
+                for (let choice of question.choices) {
+                    if (choice.isCorrect) correctAnswersAll.push(choice.text);
+                }
+                for (let correctAnswer of correctAnswersAll) {
+                    if (!answer.value.includes(correctAnswer)){
+                        answer.isCorrect = false;
+                        break;
+                    }
+                }
+                if (answer.isCorrect) this.score += question.points;
+                break;
         }
     }
     this.submStatus = 'evaluated';

@@ -3,10 +3,12 @@
   <head>
     <title>Quest-i</title>
     <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
       <div id="header">
           <a href='/'><h1 class>Quest-i</h1></a>
+          <p>quizzes for devs</p>
       </div>
       <nav>
           {{#unless authorized}}
@@ -18,7 +20,9 @@
           {{/unless}}
           {{#if authorized}}
           <div>
-            <a href="/history">History</a>
+            <a class="{{#if active.home}}active{{/if}}" href="/">Home</a>
+            <a class="{{#if active.create}}active{{/if}}" href="/create">Create</a>
+            <a class="{{#if active.history}}active{{/if}}" href="/history">History</a>
           </div>
           <div>
             <p id='username'>{{user.username}}</p>

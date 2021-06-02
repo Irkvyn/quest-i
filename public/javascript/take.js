@@ -24,28 +24,75 @@ function addQuestions(questions, newSubmissionId) {
     let form = document.createElement('form');
     questions.forEach(question => {
         let questionDiv = document.createElement('div');
+        let descriptionDiv = document.createElement('div');
         let description = document.createElement('h3');
+        let points = document.createElement('p');
+        let choices = document.createElement('div');
+
+        descriptionDiv.classList.add("description");
+        choices.classList.add("choices");
 
         description.innerHTML = question.description;
+        if (question.points == 1) {
+            points.innerHTML = `(${question.points} point)`;
+        } else {
+            points.innerHTML = `(${question.points} points)`;
+        }
 
-        questionDiv.appendChild(description);
+        descriptionDiv.append(description, points);
+        questionDiv.appendChild(descriptionDiv);
+        questionDiv.appendChild(choices);
 
-        question.choices.forEach(choice => {
-            let input = document.createElement('input');
-            let label = document.createElement('label');
-
-            input.type = "radio";
-            input.name = question._id;
-            input.value = choice.text;
-
-            label.setAttribute("for", choice.text);
-            label.innerHTML = choice.text;
-
-            questionDiv.appendChild(input);
-            questionDiv.appendChild(label);
-        });
+        switch (question.questionType) {
+            case 'text':
+                let textInput = document.createElement('input');
+                textInput.type = 'text';
+                textInput.name = question._id;
+                choices.appendChild(textInput);
+                choices.classList.add('text-answer');
+                break;
+            case 'single':
+                question.choices.forEach(choice => {
+                    let input = document.createElement('input');
+                    let label = document.createElement('label');
+                    let choiceDiv = document.createElement('div');
+        
+                    input.type = "radio";
+                    input.name = question._id;
+                    input.value = choice.text;
+        
+                    label.setAttribute("for", choice.text);
+                    label.innerHTML = choice.text;
+        
+                    choiceDiv.appendChild(input);
+                    choiceDiv.appendChild(label);
+                    choices.appendChild(choiceDiv);
+                    choices.classList.add('single-answer');
+                });
+                break;
+            case 'multiple':
+                question.choices.forEach(choice => {
+                    let input = document.createElement('input');
+                    let label = document.createElement('label');
+                    let choiceDiv = document.createElement('div');
+        
+                    input.type = "checkbox";
+                    input.name = question._id;
+                    input.value = choice.text;
+        
+                    label.setAttribute("for", choice.text);
+                    label.innerHTML = choice.text;
+        
+                    choiceDiv.appendChild(input);
+                    choiceDiv.appendChild(label);
+                    choices.appendChild(choiceDiv);
+                    choices.classList.add('multiple-answer');
+                });
+                break;
+        }
         form.appendChild(questionDiv);
     });
+
     let button = document.createElement('button');
 
     button.type = "submit";
@@ -55,11 +102,17 @@ function addQuestions(questions, newSubmissionId) {
         let reqBody = {};
         let answers = [];
         try {
+
             for (let answer of formData.entries()) {
                 let answerObj = {};
-                answerObj['id'] = answer[0];
-                answerObj['value'] = answer[1];
-                answers.push(answerObj);
+                let existingAnswerObj = answers.filter((obj) => obj.id == answer[0])[0];
+                if (!existingAnswerObj) {
+                    answerObj['id'] = answer[0];
+                    answerObj['value'] = [answer[1]];
+                    answers.push(answerObj);
+                } else {
+                    existingAnswerObj.value.push(answer[1]);
+                }
             }
             reqBody.answers = answers;
             reqBody.submission = newSubmissionId;
@@ -72,6 +125,8 @@ function addQuestions(questions, newSubmissionId) {
                     let message = document.createElement('p');
                     message.style.color = 'green';
                     message.innerHTML = 'Submitted successfully!';
+                    event.target.remove();
+                    document.querySelector('form').remove();
                     container.appendChild(message);
                 }
             });
@@ -81,6 +136,6 @@ function addQuestions(questions, newSubmissionId) {
         event.preventDefault();
     }
 
-    form.appendChild(button);
     container.appendChild(form);
+    container.appendChild(button);
 }

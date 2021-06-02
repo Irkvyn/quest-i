@@ -1,0 +1,66 @@
+body {
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+nav {
+    background-color: coral;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 35px;
+}
+
+nav * {
+    text-decoration: none;
+    color: white;
+    width: 80px;
+    text-align: center;
+}
+
+.active {
+    color: lightyellow;
+}
+
+.login-container, .register-container {
+    width: 240px;
+    margin: auto;
+    background-color: lightyellow;  
+    margin-top: 50px;
+}
+
+form.login, form.register {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top:20px;
+    padding-bottom: 20px;
+}
+
+form.login *, form.register * {
+    margin: 5px;
+    width: 180px;
+}
+
+form.login input, form.register input{
+    margin-left: 10px;
+}
+
+button#submit-button {
+    width: 80px;
+    margin-top: 20px;
+}
+
+.record {
+    display: flex;
+    flex-direction: row;
+}
+
+.record * {
+    margin-left: 60px;
+}
+
+#header a {
+    text-decoration: none;
+    color: black;
+}

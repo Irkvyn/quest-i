@@ -1,6 +1,7 @@
 import User from '../models/users.js';
 import bcrypt from 'bcrypt';
 import Quiz from '../models/quiz.js';
+import Question from '../models/question.js';
 
 async function homeController(req, res) {
     try {
@@ -21,7 +22,8 @@ async function historyController(req, res) {
         const user = await User.findOne({_id: req.userId});
         res.render('history', {
             authorized: true,
-            user: {username: user.username}
+            user: {username: user.username},
+            active: {history:true}
         });
     } catch (err) {
         console.log(err);
@@ -55,4 +57,36 @@ async function takeController(req, res) {
     }
 }
 
-export {homeController, takeController, loginController, registerController, historyController};
+async function createController(req, res) {
+    try {
+        const user = await User.findOne({_id: req.userId});
+        res.render('create', {
+            authorized: true,
+            user: {username: user.username},
+            active: {create:true}
+        });
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+async function createControllerPost(req, res) {
+    try {
+        const quiz = Quiz(req.body.quiz);
+        await quiz.save();
+        //await quiz.save();
+        for (let question of req.body.questions){
+            question.quiz = quiz._id;
+            await Question(question).save();
+        }
+        res.send(quiz._id);
+    } catch(err) {
+        console.log(err.message);
+    }
+}
+
+export {homeController, takeController, 
+    loginController, registerController, 
+    historyController, createController,
+    createControllerPost
+};

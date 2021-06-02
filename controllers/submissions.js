@@ -19,9 +19,12 @@ async function submitSubmission(req, res) {
         const submission = await Submission.findOne({_id: req.params.submissionId});
         submission.answers = req.body.answers;
         submission.status ='submitted';
-        submission.submitted_at = Date.now()    ;
-        submission.save();
-        submission.evaluate();
+        submission.submitted_at = Date.now();
+        await submission.save();
+        setTimeout(async () => {
+            const submission = await Submission.findOne({_id: req.params.submissionId});
+            submission.evaluate()
+        }, 3000);
         res.send('ok');
     } catch (err) {
         console.log(err);
@@ -31,7 +34,7 @@ async function submitSubmission(req, res) {
 async function getUserSubmissions(req, res) {
     try {
         const resBody = [];
-        const submissions = await Submission.find({user: req.userId});
+        const submissions = await Submission.find({user: req.userId}).sort({'submitted_at': 'desc'});
         for (let submission of submissions) {
             let resObj = {};
             let quiz = await Quiz.findOne({_id: submission.quiz});
@@ -44,7 +47,7 @@ async function getUserSubmissions(req, res) {
                 resObj['submitted'] = date.toLocaleString();
             }
             resObj['status'] = submission.submStatus;
-            if (submission.score) resObj['score'] = `${submission.score}/${submission.totalScore}`;
+            if (submission.score !== null) resObj['score'] = `${submission.score}/${submission.totalScore}`;
             resBody.push(resObj);
         }
         res.json(resBody);

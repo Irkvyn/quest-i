@@ -1,66 +1,184 @@
 body {
+    margin-top:20px;
     margin-left: 100px;
     margin-right: 100px;
 }
 
-nav {
-    background-color: coral;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 35px;
-}
-
-nav * {
-    text-decoration: none;
-    color: white;
-    width: 80px;
-    text-align: center;
-}
-
-.active {
-    color: lightyellow;
-}
-
-.login-container, .register-container {
-    width: 240px;
-    margin: auto;
-    background-color: lightyellow;  
-    margin-top: 50px;
-}
-
-form.login, form.register {
+/* header */
+#header {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding-top:20px;
-    padding-bottom: 20px;
+    margin-bottom: 20px;
 }
 
-form.login *, form.register * {
-    margin: 5px;
-    width: 180px;
+#header a{
+    text-decoration: none;
+    color: black;
 }
 
-form.login input, form.register input{
+#header p {
+    color: grey;
     margin-left: 10px;
 }
 
-button#submit-button {
-    width: 80px;
+#header * {
+    margin: 0px;
+}
+
+/* nav bar */
+nav {
+    background-color: coral;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+nav div *{
+    font-size: 18px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav div a {
+    display: inline-block;
+    width: 100px;
+    text-align: center;
+}
+
+nav div p {
+    width: 100px;
+    text-align: center;
+}
+a.active {
+    color:bisque;
+}
+
+/* sample quizzes */
+div#sample-quizzes {
+    display: flex;
+    justify-content: space-around;
+}
+
+div#sample-quizzes div {
+    border: 2px solid black;
+    width: 200px;
+    height: 200px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+div#sample-quizzes div:hover {
+    background-color: lightskyblue;
+}
+
+/* login-register */
+form.authorize {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
+
+form.authorize label {
+    font-size: 18px;
+}
+
+form.authorize input {
+    margin-bottom: 16px;
+}
+
+form button {
+    font-size: 16px;
+}
+
+/* history log */
+.record {
+    display: flex;   
+    border: 1px solid black;
+    margin-top: 10px;
+    border-radius: 15px;
+}
+
+.record p {
+    font-size: 14px;
+    width: 200px;
+    text-align: center;
+}
+
+/* create page */
+fieldset{
     margin-top: 20px;
 }
 
-.record {
+#footer {
+    margin-top: 20px;
+}
+
+#footer button {
+    font-size: 16px;
+}
+
+.points {
+    width: 35px;
+    text-align: center;
+}
+
+legend {
+    font-size: 18px;
+}
+
+.question div * {
+    margin-right: 5px;
+}
+
+.question-text {
+    width: 60%;
+}
+
+.choice-button {
+    margin-right: 5px;
+}
+
+#description {
+    width: 60%;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {  
+   opacity: 1;
+}
+
+/* take quiz  */
+#quiz {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
 }
 
-.record * {
-    margin-left: 60px;
+#quiz   form {
+    width: 85%;
 }
 
-#header a {
-    text-decoration: none;
-    color: black;
+.choices {
+    display: flex;
+    flex-direction: column;
+}
+
+#quiz button {
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.description {
+    display: flex;
+    align-items: center;
+}
+
+.description h3{
+    margin-right: 10px;
+}
+
+.description p {
+    color: grey;
 }
