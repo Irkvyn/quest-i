@@ -1,7 +1,7 @@
 import Submission from '../models/submission.js';
 import User from '../models/users.js';
-import jwt from 'jsonwebtoken';
-import Quiz from '../models/quiz.js'
+import Quiz from '../models/quiz.js';
+import Question from '../models/question.js';
 
 async function createSubmission(req, res) {
     try {
@@ -48,6 +48,7 @@ async function getUserSubmissions(req, res) {
             }
             resObj['status'] = submission.submStatus;
             if (submission.score !== null) resObj['score'] = `${submission.score}/${submission.totalScore}`;
+            resObj['id'] = submission.id;
             resBody.push(resObj);
         }
         res.json(resBody);
@@ -56,4 +57,22 @@ async function getUserSubmissions(req, res) {
     }
 }
 
-export {createSubmission, submitSubmission, getUserSubmissions};
+async function showSubmission(req, res) {
+    try {
+        const submission = await Submission.findOne({_id: req.params.submissionId}).populate(['answers.id','quiz']);
+        const user = await User.findOne({_id: req.userId});
+
+        res.render('submission', {
+            authorized: true,
+            user: {username: user.username},
+            submission: submission,
+            show: (submission.submStatus == 'passed' || submission.submStatus == 'failed') ? true : false
+        });
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export {createSubmission, submitSubmission, 
+    getUserSubmissions, showSubmission
+};

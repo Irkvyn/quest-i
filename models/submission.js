@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import Question from './question.js';
+import Quiz from './quiz.js';
 
 const submissionSchema = mongoose.Schema({
     quiz: {
@@ -14,6 +15,7 @@ const submissionSchema = mongoose.Schema({
     },
     submStatus: {
         type: String,
+        enum: ['pending', 'submitted', 'passed', 'failed'],
         default: 'pending'
     },
     created_at: {
@@ -47,7 +49,6 @@ const submissionSchema = mongoose.Schema({
 submissionSchema.pre('save', async function(next) {
     if (this.isNew) {
         let questions = await Question.find({quiz: this.quiz});
-        let totalScore = 0;
         for (let question of questions) {
             this.totalScore += question.points;
         }
@@ -98,7 +99,12 @@ submissionSchema.methods.evaluate = async function() {
                 break;
         }
     }
-    this.submStatus = 'evaluated';
+    const quiz = await Quiz.findOne({_id: this.quiz});
+    if (quiz.passScore <= this.score) {
+        this.submStatus = 'passed';
+    } else {
+        this.submStatus = 'failed'
+    }
     this.save();
 }
 

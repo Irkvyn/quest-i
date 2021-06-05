@@ -70,6 +70,7 @@ div#sample-quizzes div {
 
 div#sample-quizzes div:hover {
     background-color: lightskyblue;
+    cursor: pointer;
 }
 
 /* login-register */
@@ -99,6 +100,9 @@ form button {
     margin-top: 10px;
     border-radius: 15px;
 }
+.record:hover{
+    cursor: pointer;
+}
 
 .record p {
     font-size: 14px;
@@ -106,45 +110,101 @@ form button {
     text-align: center;
 }
 
+.record.passed {
+    background-color: rgb(230, 250, 230);
+}
+
+.record.failed {
+    background-color: rgb(250, 230, 230);
+}
+
 /* create page */
-fieldset{
+div#create-container {
     margin-top: 20px;
 }
 
-#footer {
-    margin-top: 20px;
+div#quiz-field {
+    float: left;
+    width: 35%;
+    display: flex;
+    flex-direction: column;
 }
 
-#footer button {
+div#quiz-field button {
     font-size: 16px;
 }
 
-.points {
-    width: 35px;
-    text-align: center;
+div#quiz-field div {
+    background-color: #fbfbfb;
 }
 
-legend {
-    font-size: 18px;
+div#quiz-field label {
+    font-weight: bolder;
 }
 
-.question div * {
-    margin-right: 5px;
+#quiz-field .fas {
+    float: right;
 }
 
-.question-text {
-    width: 60%;
+#basic-options.hidden {
+    height: 0;
+    visibility: hidden;
+    padding: 0;
 }
 
-.choice-button {
-    margin-right: 5px;
+#basic-options {
+    visibility: visible;
+    height: 100%;
+    padding: 13px 5px 3px 5px;
+}
+
+#title {
+    width: calc(100% - 6px);
+    outline: none;
+    margin-bottom: 13px;
+    background-color: #fffaf8;
+    border: 1px solid black;
+    margin-top: 2px;
 }
 
 #description {
-    width: 60%;
+    width: calc(100% - 6px);
+    resize: none;
+    font-family: inherit;
+    font-size: inherit;
+    margin-bottom: 10px;
+    margin-top: 2px;
+    outline: none;
+    background-color: #fffaf8;
 }
 
-input[type=number]::-webkit-inner-spin-button, 
+div#more-options.hidden {
+    height: 0;
+    visibility: hidden;
+    padding: 0;
+}
+
+div#more-options {
+    display: grid;
+    grid-template-columns: 22% 22% 22% 22%;
+    column-gap: 4%;
+    row-gap: 20%;
+    height: 100px;
+    padding: 20px 5px 60px 5px;
+}
+
+div#more-options label {
+    font-weight: normal;
+}
+
+div#more-options input, select {
+    background-color: #fffaf8;
+    border: 1px solid black;
+    text-align: center;
+    outline: none;
+}
+
+div#more-options input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button {  
    opacity: 1;
 }
@@ -156,8 +216,10 @@ input[type=number]::-webkit-outer-spin-button {
     align-items: center;
 }
 
-#quiz   form {
+#quiz form {
     width: 85%;
+    min-width: 100%;
+    max-width: 100%;
 }
 
 .choices {
@@ -181,4 +243,38 @@ input[type=number]::-webkit-outer-spin-button {
 
 .description p {
     color: grey;
+}
+
+/* show submission */
+.submission-title {
+    text-align: center;
+}
+
+#submission {
+    margin-left: 7.5%;
+    margin-right: 7.5%;
+}
+
+p.correct:before {
+    content:'\2713';
+    display:inline-block;
+    color:green;
+    padding:0 6px 0 0;
+}
+
+p.wrong:before {
+    content:'\274c';
+    display:inline-block;
+    color:red;
+    padding: 0 6px 0px 0;
+    font-size: 9px;
+}
+
+ul li {
+    list-style-type:none;
+    font-size:1em;
+}
+
+ul {
+    padding-left: 0px;
 }

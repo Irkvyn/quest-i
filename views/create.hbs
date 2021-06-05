@@ -1,16 +1,51 @@
 <div id='create-container'>
-    <form id='form-container'> 
-        <fieldset id='quiz-field'>
-            <legend>Quiz</legend>
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name">
+    <div id="quiz-field">
+        <button id="basic-options-button">Quiz<i class="fas fa-angle-down"></i></button>
+        <div id="basic-options">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" autocomplete="off">
             <label for="description">Description</label>
-            <input type="text" id="description">
-        </fieldset>
-    </form>
-    <div id='footer'>
-        <button id='add'>Add Question</button>
-        <button id='submit'>Create</button>
+            <textarea id="description" name="description" rows="4"></textarea>
+        </div>
+        <button id="more-options-button">Options<i class="fas fa-angle-down"></i></button>
+        <div id="more-options" class="hidden">
+
+            <label for="category">Category</label>
+            <select name="category" id="category">
+                <option>Web</option>
+                <option>Python</option>
+                <option>C/C#/C++</option>
+                <option>Other</option>
+            </select>
+
+            <label for="availability">Availability</label>
+            <select name="availability" id="availability">
+                <option>Public</option>
+                <option>Private</option>
+            </select>
+
+            <label for="Questions">Questions</label>
+            <input type="number" name="questions" id="questions">
+
+            <label for="expiry">Expiry</label>
+            <input type="datetime-local" name="expiry" id="expiry">
+
+            <label for="pass-score">Pass Score</label>
+            <input type="number" name="pass-score" id="pass-score">
+
+            <label for="time-limit">Time Limit</label>
+            <input type="number" name="time-limit" id="time-limit">
+
+            <label for="submissions-limit">Subm. Limit</label>
+            <input type="number" name="submissions-limit" id="submissions-limit">
+
+            <label for="shuffle">Shuffle</label>
+            <input type="checkbox" name="shuffle" id="shuffle">
+
+        </div>
+    </div>
+    <div id="questions-field">
+        <button>Add Question</button>
     </div>
 </div>
 <script type="text/javascript" src="/javascript/create.js"></script>

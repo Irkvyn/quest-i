@@ -1,3 +1,9 @@
 <h2>Try a sample quiz!</h2>
-<div id="sample-quizzes"></div>
-<script type="text/javascript" src="/javascript/getSampleQuizzes.js"></script>
+<div id="sample-quizzes">
+    {{#each quizzes}}
+    <div onclick="(function(){window.location.href = '/take?quiz={{this._id}}'})()" class="quiz">
+        <h3>{{this.title}}</h3>
+        <p>{{this.description}}</p>
+    </div>
+    {{/each}}
+</div>

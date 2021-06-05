@@ -1,0 +1,26 @@
+<div id="submission">
+<h2 class="submission-title">{{submission.quiz.title}}</h2>
+
+<div id="info">
+    <p>Created at: {{submission.created_at}}</p>
+    <p>Submitted at: {{submission.created_at}}</p>
+    <p>Status: {{submission.submStatus}}</p>
+    {{#if show}}<p>Score: {{submission.score}}/{{submission.totalScore}}</p>{{/if}}
+</div>
+{{#if show}}
+<div id="answers">
+    <ul>
+        {{#each submission.answers}}
+        <li>
+            <div>
+                <h3>{{this.id.description}}</h3>
+            </div>
+            <div>
+                <p class="{{#if this.isCorrect}}correct{{else}}wrong{{/if}}">{{this.value}}</p>
+            </div>
+        </li>
+        {{/each}}
+    </ul>
+</div>
+{{/if}}
+</div>

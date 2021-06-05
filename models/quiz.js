@@ -7,6 +7,13 @@ const quizSchema = mongoose.Schema({
     },
     description: {
         type: String
+    },
+    passScore: {
+        type: Number
+    },
+    availability: {
+        type: String,
+        enum: ['public', 'private', 'sample'],
     }
 });
 

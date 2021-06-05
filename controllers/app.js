@@ -1,15 +1,16 @@
 import User from '../models/users.js';
-import bcrypt from 'bcrypt';
 import Quiz from '../models/quiz.js';
 import Question from '../models/question.js';
 
 async function homeController(req, res) {
     try {
         const user = await User.findOne({_id: req.userId});
+        const sampleQuizzes = await Quiz.find(/*{availability: 'sample'}*/);
         res.render('index', {
             active: {home: true},
             authorized: true,
-            user: {username: user.username}
+            user: {username: user.username},
+            quizzes: sampleQuizzes
         });
     } catch (err) {
         console.log(err);
