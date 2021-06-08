@@ -23,7 +23,7 @@ async function submitSubmission(req, res) {
         await submission.save();
         setTimeout(async () => {
             const submission = await Submission.findOne({_id: req.params.submissionId});
-            submission.evaluate()
+            submission.evaluate();
         }, 3000);
         res.send('ok');
     } catch (err) {
@@ -73,6 +73,32 @@ async function showSubmission(req, res) {
     }
 }
 
+async function getQuizSubmissions(req, res) {
+    try {
+        let resBody = [];
+        const submissions = await Submission.find({user: req.userId, quiz: req.params.quizId}).sort('-submitted_at');
+        for (let submission of submissions) {
+            let resObj = {};
+            resObj['id'] = submission._id;
+
+            let created_date = new Date(submission.created_at);
+            resObj['created'] = created_date.toLocaleString();
+
+            let date = new Date(submission.submitted_at);
+            resObj['submitted'] = date.toLocaleString();
+            
+            resObj['status'] = submission.submStatus;
+            resObj['score'] = `${submission.score}/${submission.totalScore}`;
+            resObj['active'] = submission.active;
+            resBody.push(resObj);
+        }
+        res.json(resBody);
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 export {createSubmission, submitSubmission, 
-    getUserSubmissions, showSubmission
+    getUserSubmissions, showSubmission,
+    getQuizSubmissions
 };

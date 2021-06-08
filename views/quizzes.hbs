@@ -1,0 +1,18 @@
+<table id="user-quizzes">
+    <tr>
+        <th>Quizz</th>
+        <th>Status</th>
+        <th>Score</th>
+        <th></th>
+  </tr>
+    {{#each submissions}}
+    <tr onclick="showQuizSubmissions(event)" id={{this.quiz._id}}>
+        <td class="quiz-title">{{this.quiz.title}}</td>
+        <td>{{this.submStatus}}</td>
+        <td>{{this.score}}/{{this.totalScore}}</td>
+        <td><button onclick="(function(){window.location.href = '/take?quiz={{this.quiz._id}}'})()">Try Again</button></td>
+    </tr>
+    {{/each}}
+</table>
+<div id="submissions-field"></div>
+<script type="text/javascript" src="/javascript/quizzes.js"></script>

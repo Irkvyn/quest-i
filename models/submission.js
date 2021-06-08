@@ -43,6 +43,10 @@ const submissionSchema = mongoose.Schema({
     score: {
         type: Number,
         default: null
+    },
+    active: {
+        type: Boolean,
+        default: false
     }
 });
 
@@ -99,11 +103,32 @@ submissionSchema.methods.evaluate = async function() {
                 break;
         }
     }
+
     const quiz = await Quiz.findOne({_id: this.quiz});
     if (quiz.passScore <= this.score) {
         this.submStatus = 'passed';
     } else {
         this.submStatus = 'failed'
+    }
+
+    if (quiz.evaluation == "Latest") {
+        let previousActiveSubmission = await Submission.findOne({quiz: this.quiz, user: this.user, active: true});
+        if (previousActiveSubmission) {
+            previousActiveSubmission.active = false;
+            await previousActiveSubmission.save();
+        }
+        this.active = true;
+    } else if (quiz.evaluation == "Best") {
+        let previousActiveSubmission = await Submission.findOne({quiz: this.quiz, user: this.user, active: true});
+        if (previousActiveSubmission) {
+            if (this.score >= previousActiveSubmission.score) {
+                this.active = true;
+                previousActiveSubmission.active = false;
+                await previousActiveSubmission.save();
+            }
+        } else {
+            this.active = true;
+        }
     }
     this.save();
 }

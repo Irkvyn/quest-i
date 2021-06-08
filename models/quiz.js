@@ -8,12 +8,46 @@ const quizSchema = mongoose.Schema({
     description: {
         type: String
     },
-    passScore: {
-        type: Number
+    category: {
+        type: String,
+        required: true,
+        enum: ['Web', 'Python', 'C/C#/C++', 'Other'],
+        defalult: 'Other'
     },
     availability: {
         type: String,
-        enum: ['public', 'private', 'sample'],
+        enum: ['Public', 'Private', 'sample'],
+    },
+    start: {
+        type: Date,
+        default: Date.now
+    },
+    expiry: {
+        type: Date,
+        default: null
+    },
+    passScore: {
+        type: Number
+    },
+    evaluation: {
+        type: String,
+        enum: ['Best', 'Latest']
+    },
+    timeLimit: {
+        type: Number,
+        default: null
+    },
+    submLimit: {
+        type: Number,
+        default: null
+    },
+    questionsLimit: {
+        type: Number,
+        default: null
+    },
+    shuffle: {
+        type: Boolean,
+        default: false
     }
 });
 

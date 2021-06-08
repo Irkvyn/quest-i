@@ -24,28 +24,37 @@
                 <option>Private</option>
             </select>
 
-            <label for="Questions">Questions</label>
-            <input type="number" name="questions" id="questions">
+            <label for="start">Start</label>
+            <input type="datetime-local" name="start" id="start">
 
             <label for="expiry">Expiry</label>
             <input type="datetime-local" name="expiry" id="expiry">
 
-            <label for="pass-score">Pass Score</label>
-            <input type="number" name="pass-score" id="pass-score">
+            <label for="passScore">Pass Score</label>
+            <input type="number" name="passScore" id="passScore">
 
-            <label for="time-limit">Time Limit</label>
-            <input type="number" name="time-limit" id="time-limit">
+            <label for="Evaluation">Evaluation</label>
+            <select name="evaluation" id="evaluation">
+                <option>Best</option>
+                <option>Latest</option>
+            </select>
 
-            <label for="submissions-limit">Subm. Limit</label>
-            <input type="number" name="submissions-limit" id="submissions-limit">
+            <label for="timeLimit">Time Limit</label>
+            <input type="number" name="timeLimit" id="timeLimit">
+
+            <label for="submLimit">Subm. Limit</label>
+            <input type="number" name="submLimit" id="submLimit">
+
+            <label for="questionsLimit">Questions</label>
+            <input type="number" name="questionsLimit" id="questionsLimit">
 
             <label for="shuffle">Shuffle</label>
             <input type="checkbox" name="shuffle" id="shuffle">
-
         </div>
+        <button id="add-question">Add Question</button>
+        <button id="create-quiz">Create Quiz</button>
     </div>
     <div id="questions-field">
-        <button>Add Question</button>
     </div>
 </div>
 <script type="text/javascript" src="/javascript/create.js"></script>

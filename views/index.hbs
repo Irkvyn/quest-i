@@ -1,9 +1,23 @@
-<h2>Try a sample quiz!</h2>
-<div id="sample-quizzes">
+<div id="try-sample">
+    <h2>Try a sample quiz</h2>
+    <div id="sample-quizzes">
     {{#each quizzes}}
     <div onclick="(function(){window.location.href = '/take?quiz={{this._id}}'})()" class="quiz">
         <h3>{{this.title}}</h3>
         <p>{{this.description}}</p>
     </div>
     {{/each}}
+    </div>
+</div>
+<div id="find-quiz">
+    <h2>Find a quiz by choosing a category</h2>
+    <select>
+        <option hidden disabled selected value> -- select an option -- </option>
+        <option>Web</option>
+        <option>Python</option>
+        <option>C/C#/C++</option>
+        <option>Other</option>
+    </select>   
+</div>
+<div id="categorized-quizzes">
 </div>
