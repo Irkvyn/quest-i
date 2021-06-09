@@ -148,7 +148,7 @@ createQuizButton.addEventListener('click', event => {
         questions.push(newQuestion);
     }
 
-    fetch('/create', {
+    fetch('/creator/create', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

@@ -1,8 +1,8 @@
 <div id="try-sample">
     <h2>Try a sample quiz</h2>
-    <div id="sample-quizzes">
+    <div class="quiz-box-container">
     {{#each quizzes}}
-    <div onclick="(function(){window.location.href = '/take?quiz={{this._id}}'})()" class="quiz">
+    <div onclick="(function(){window.location.href = '/take?quiz={{this._id}}'})()" class="quiz-box">
         <h3>{{this.title}}</h3>
         <p>{{this.description}}</p>
     </div>
@@ -11,7 +11,7 @@
 </div>
 <div id="find-quiz">
     <h2>Find a quiz by choosing a category</h2>
-    <select>
+    <select id="select-category">
         <option hidden disabled selected value> -- select an option -- </option>
         <option>Web</option>
         <option>Python</option>
@@ -19,4 +19,5 @@
         <option>Other</option>
     </select>
 </div>
-<div id="categorized-quizzes"></div>
+<div id="categorized-quizzes" class="quiz-box-container"></div>
+<script type="text/javascript" src="/javascript/index.js"></script>

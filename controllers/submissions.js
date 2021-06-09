@@ -98,7 +98,34 @@ async function getQuizSubmissions(req, res) {
     }
 }
 
+async function getAllActiveSubmissions(req, res) {
+    try {
+        let resBody = [];
+        console.log('here');
+        const submissions = await Submission.find({quiz: req.params.quizId, active: true}).populate('user').sort('-submitted_at');
+        for (let submission of submissions) {
+            let resObj = {};
+            resObj['id'] = submission._id;
+
+            resObj['user'] = submission.user.username;
+
+            let created_date = new Date(submission.created_at);
+            resObj['created'] = created_date.toLocaleString();
+
+            let date = new Date(submission.submitted_at);
+            resObj['submitted'] = date.toLocaleString();
+            
+            resObj['status'] = submission.submStatus;
+            resObj['score'] = `${submission.score}/${submission.totalScore}`;
+            resBody.push(resObj);
+        }
+        res.json(resBody);
+    } catch(err) {
+        console.log(err);
+    }
+}
+
 export {createSubmission, submitSubmission, 
     getUserSubmissions, showSubmission,
-    getQuizSubmissions
+    getQuizSubmissions, getAllActiveSubmissions
 };

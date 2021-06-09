@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import Submission from './submission.js'
 
 const quizSchema = mongoose.Schema({
     title: {
@@ -48,6 +49,11 @@ const quizSchema = mongoose.Schema({
     shuffle: {
         type: Boolean,
         default: false
+    },
+    creator: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: true
     }
 });
 

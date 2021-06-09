@@ -1,6 +1,7 @@
 <table id="user-quizzes">
     <tr>
         <th>Quizz</th>
+        <th>Evaluation</th>
         <th>Status</th>
         <th>Score</th>
         <th></th>
@@ -8,6 +9,7 @@
     {{#each submissions}}
     <tr onclick="showQuizSubmissions(event)" id={{this.quiz._id}}>
         <td class="quiz-title">{{this.quiz.title}}</td>
+        <td>{{this.quiz.evaluation}}</td>
         <td>{{this.submStatus}}</td>
         <td>{{this.score}}/{{this.totalScore}}</td>
         <td><button onclick="(function(){window.location.href = '/take?quiz={{this.quiz._id}}'})()">Try Again</button></td>

@@ -1,12 +1,12 @@
 import Quiz from '../models/quiz.js';
 import Question from '../models/question.js'; 
 
-async function getSampleQuizzes(req, res) {
+async function getQuizzesByCategory(req, res) {
     try {
-        const quizzes = await Quiz.find();
+        const quizzes = await Quiz.find({category: req.params.category});
         res.json(quizzes);
     } catch (err) {
-        console.log('Could not get sample quizzes');
+        res.status(404).send(err);
     }
 }
 
@@ -19,4 +19,4 @@ async function quizQuestionsController(req, res) {
     }
 }
 
-export {getSampleQuizzes, quizQuestionsController};
+export {quizQuestionsController, getQuizzesByCategory};

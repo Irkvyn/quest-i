@@ -11,7 +11,7 @@ function showQuizSubmissions(event) {
         return;
     }
     tr.classList.add('active-quiz');
-    fetch(`submissions/quiz/${tr.id}`)
+    fetch(`submissions/active/quiz/${tr.id}`)
     .then(response => response.json())
     .then(data => {
         submissions.innerHTML = "";
@@ -32,9 +32,8 @@ function showQuizSubmissions(event) {
             }
             if (submission.status == 'passed') submissionDiv.classList.add('passed');
             if (submission.status == 'failed') submissionDiv.classList.add('failed');
-            if (submission.active) submissionDiv.classList.add('active-submission');
             for (key in submission) {
-                if (key=="id" || key=="active") continue;
+                if (key=="id") continue;
                 let newP = document.createElement('p');
                 newP.innerHTML = submission[key];
                 submissionDiv.appendChild(newP);

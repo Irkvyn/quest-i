@@ -1,0 +1,25 @@
+<table id="creator-quizzes">
+    <tr>
+        <th>Quiz</th>
+        <th>Participants</th>
+        <th>Passed</th>
+        <th>Avg. Score</th>
+        <th></th>
+    {{#each quizzes}}
+    <tr onclick="showQuizSubmissions(event)" id={{this._id}}>
+        <td class="quiz-title">{{this.title}}</td>
+        <td>{{this.participants}}</td>
+        <td>{{this.passed}}</td>
+        <td>{{this.avgScore}} / {{this.totalScore}}</td>
+        <td><button onclick="(function(){
+                window.prompt('Copy to clipboard: Ctrl+C, Enter', 'https://quest-i.herokuapp.com/take?quiz={{this._id}}');
+            })()">Link</button></td>
+    </tr>
+    {{/each}}
+</table>
+<div id="create-quiz-container">
+    <button id="create-new-quiz" onclick="(function(){window.location.href='/creator/create';})()">
+    <i class="fa fa-plus" aria-hidden="true" style="margin-right: 10px;"></i>Create New</button>
+</div>
+<div id="submissions-field"></div>
+<script type="text/javascript" src="/javascript/creator.js"></script>

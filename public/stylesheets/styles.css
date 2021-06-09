@@ -55,24 +55,24 @@ a.active {
 }
 
 /* sample quizzes */
-div#sample-quizzes {
+.quiz-box-container {
     display: flex;
     justify-content: space-around;
-    padding-top: 20px;
-
+    flex-wrap: wrap;
+    margin-top: 20px;
 }
 
-div#sample-quizzes div {
+.quiz-box {
     border: 2px solid black;
-    width: 200px;
-    height: 200px;
+    width: 220px;
+    height: 220px;
     padding-left: 30px;
     padding-right: 30px;
     background-color: #FAEBD7;
     border-radius: 15px;
 }
 
-div#sample-quizzes div:hover {
+.quiz-box:hover {
     background-color: lightskyblue;
     cursor: pointer;
 }
@@ -144,8 +144,27 @@ form.authorize input {
 
 form button {
     font-size: 16px;
+    width:120px;
+    height: 30px;
+    border: 0px;
+    border-radius: 15px;
+    color: white;
 }
 
+#login-button {
+    background-color: rgb(67, 102, 219);
+}
+
+#login-button:active {
+    background-color: rgb(152, 174, 243);;
+}
+
+#register-button {
+    background-color: coral;
+}
+#register-button:active {
+    background-color: rgb(250, 183, 159);
+}
 /* history log */
 .record {
     display: flex;   
@@ -222,6 +241,7 @@ div#quiz-field label {
     border: 1px solid black;
     margin-top: 7px;
 }
+
 
 #description {
     width: calc(100% - 6px);
@@ -391,7 +411,7 @@ table {
 
 table td {
     text-align: center;
-    width: 30%;
+    width: 20%;
     padding: 10px 0px;
     background-color: #fbfbfb;
 }
@@ -426,4 +446,23 @@ table button {
     border-radius: 15px;
     border: none;
     height: 25px;
+    width: 70px;
+    text-align: center;
+    display:inline-block;
+}
+
+#create-quiz-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+#create-new-quiz {
+    font-size: 16px;
+    width:150px;
+    height: 30px;
+    border: 0px;
+    border-radius: 15px;
+    color: white;
+    background-color: rgb(97, 192, 97);
 }
