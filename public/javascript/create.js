@@ -130,7 +130,6 @@ createQuizButton.addEventListener('click', event => {
         if (value) quiz[field] = value;
     }
     quiz['shuffle'] = document.querySelector("#shuffle").checked;
-    console.log(quiz);
 
     let questions = [];
     for (question of questionsField.querySelectorAll("div.question")) {
@@ -155,5 +154,16 @@ createQuizButton.addEventListener('click', event => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({quiz: quiz, questions: questions})
-    });
+    })
+    .then(response => {
+        if (response.status == 200) {
+            let container = document.querySelector('#create-container');
+            container.innerHTML = "";
+            let newP = document.createElement('p');
+            newP.innerText = "Quiz created successfully!"
+            newP.style.textAlign = "center";
+            newP.style.color = "green";
+            container.appendChild(newP);
+        }
+    })
 });

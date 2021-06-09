@@ -58,6 +58,8 @@ a.active {
 div#sample-quizzes {
     display: flex;
     justify-content: space-around;
+    padding-top: 20px;
+
 }
 
 div#sample-quizzes div {
@@ -86,8 +88,9 @@ div#sample-quizzes div:hover {
     color: white;
     margin: 0;
     padding-left: 25px;
-    height: 30px;
-    margin-bottom: 20px;
+    height: 26px;
+    font-size: 20px;
+    padding-top: 4px;
 }
 /* search quizzes  */
 #find-quiz {
@@ -114,9 +117,13 @@ div#sample-quizzes div:hover {
 }
 
 #find-quiz h2 {
+    background-color: #a5837b;
+    color: white;
     margin: 0;
-    height: 30px;
     padding-left: 25px;
+    height: 26px;
+    font-size: 20px;
+    padding-top: 4px;
 }
 
 /* login-register */

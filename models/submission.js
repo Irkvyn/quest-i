@@ -93,10 +93,15 @@ submissionSchema.methods.evaluate = async function() {
                 for (let choice of question.choices) {
                     if (choice.isCorrect) correctAnswersAll.push(choice.text);
                 }
-                for (let correctAnswer of correctAnswersAll) {
-                    if (!answer.value.includes(correctAnswer)){
-                        answer.isCorrect = false;
-                        break;
+                let x = correctAnswersAll.sort();
+                let y = answer.value.sort();
+                if (x.length != y.length) answer.isCorrect = false;
+                else {
+                    for (let i = 0; i < x.length; i++) {
+                        if (x[i] != y[i]) {
+                            answer.isCorrect = false;
+                            break;
+                        }
                     }
                 }
                 if (answer.isCorrect) this.score += question.points;

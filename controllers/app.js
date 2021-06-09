@@ -81,9 +81,10 @@ async function createControllerPost(req, res) {
             console.log(question.questionType)
             await Question(question).save();
         }
-        res.send(quiz._id);
+        res.sendStatus(200);
     } catch(err) {
         console.log(err.message);
+        res.sendStatus(500);
     }
 }
 

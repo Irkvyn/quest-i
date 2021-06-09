@@ -32,7 +32,7 @@ function addQuestions(questions, newSubmissionId) {
         descriptionDiv.classList.add("description");
         choices.classList.add("choices");
 
-        description.innerHTML = question.description;
+        description.innerText = question.description;
         if (question.points == 1) {
             points.innerHTML = `(${question.points} point)`;
         } else {
@@ -62,7 +62,7 @@ function addQuestions(questions, newSubmissionId) {
                     input.value = choice.text;
         
                     label.setAttribute("for", choice.text);
-                    label.innerHTML = choice.text;
+                    label.innerText = choice.text;
         
                     choiceDiv.appendChild(input);
                     choiceDiv.appendChild(label);
@@ -81,7 +81,7 @@ function addQuestions(questions, newSubmissionId) {
                     input.value = choice.text;
         
                     label.setAttribute("for", choice.text);
-                    label.innerHTML = choice.text;
+                    label.innerText = choice.text;
         
                     choiceDiv.appendChild(input);
                     choiceDiv.appendChild(label);
