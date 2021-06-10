@@ -31,6 +31,7 @@ nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border-radius: 5px;
 }
 
 nav div *{
@@ -56,16 +57,16 @@ a.active {
 
 /* sample quizzes */
 .quiz-box-container {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    margin-top: 20px;
+    display: grid;
+    padding: 20px;
+    grid-template-columns: 1fr 1fr 1fr;
+    row-gap: 20px;
+    column-gap: 20px;
+    background-color: #fbfbfb;
 }
 
 .quiz-box {
     border: 2px solid black;
-    width: 220px;
-    height: 220px;
     padding-left: 30px;
     padding-right: 30px;
     background-color: #FAEBD7;
@@ -78,9 +79,7 @@ a.active {
 }
 
 #try-sample {
-    background-color: #fbfbfb;
-    margin: 40px 0px;
-    padding-bottom: 20px;
+    margin-top: 40px;
 }
 
 #try-sample h2 {
@@ -91,6 +90,7 @@ a.active {
     height: 26px;
     font-size: 20px;
     padding-top: 4px;
+    border-radius: 5px 5px 0px 0px;
 }
 /* search quizzes  */
 #find-quiz {
@@ -100,6 +100,7 @@ a.active {
     background-color: #8c6258c9;
     color: white;
     justify-content: space-between;
+    border-radius: 5px 5px 0px 0px;
 }
 
 #find-quiz select {
@@ -124,6 +125,7 @@ a.active {
     height: 26px;
     font-size: 20px;
     padding-top: 4px;
+    border-radius: 5px 5px 0px 0px;
 }
 
 /* login-register */
