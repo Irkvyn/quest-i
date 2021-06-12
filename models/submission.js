@@ -15,7 +15,7 @@ const submissionSchema = mongoose.Schema({
     },
     submStatus: {
         type: String,
-        enum: ['pending', 'submitted', 'passed', 'failed'],
+        enum: ['pending', 'submitted', 'passed', 'failed', 'cannot evaluate'],
         default: 'pending'
     },
     created_at: {
@@ -61,81 +61,86 @@ submissionSchema.pre('save', async function(next) {
 });
 
 submissionSchema.methods.evaluate = async function() {
-    this.score = 0;
-    for (let answer of this.answers) {
-        let question = await Question.findOne({_id: answer.id});
-        let questionType = question.questionType;
-        switch (questionType) {
-            case 'text':
-                let correctAnswers = [];
-                for (let choice of question.choices) {
-                    if (choice.isCorrect) correctAnswers.push(choice.text);
-                }
-                if (correctAnswers.includes(answer.value[0])) {
-                    this.score += question.points;
+    try {
+        this.score = 0;
+        for (let answer of this.answers) {
+            let question = await Question.findOne({_id: answer.id});
+            let questionType = question.questionType;
+            switch (questionType) {
+                case 'text':
+                    let correctAnswers = [];
+                    for (let choice of question.choices) {
+                        if (choice.isCorrect) correctAnswers.push(choice.text);
+                    }
+                    if (correctAnswers.includes(answer.value[0])) {
+                        this.score += question.points;
+                        answer.isCorrect = true;
+                    } else {
+                        answer.isCorrect = false;
+                    }
+                    break;
+                case 'single':
+                    let correctAnswer = question.choices.filter((choice) => choice.isCorrect)[0].text;
+                    if (answer.value[0] == correctAnswer) {
+                        this.score += question.points;
+                        answer.isCorrect = true;
+                    } else {
+                        answer.isCorrect = false;
+                    }
+                    break;
+                case 'multiple':
                     answer.isCorrect = true;
-                } else {
-                    answer.isCorrect = false;
-                }
-                break;
-            case 'single':
-                let correctAnswer = question.choices.filter((choice) => choice.isCorrect)[0].text;
-                if (answer.value[0] == correctAnswer) {
-                    this.score += question.points;
-                    answer.isCorrect = true;
-                } else {
-                    answer.isCorrect = false;
-                }
-                break;
-            case 'multiple':
-                answer.isCorrect = true;
-                let correctAnswersAll = [];
-                for (let choice of question.choices) {
-                    if (choice.isCorrect) correctAnswersAll.push(choice.text);
-                }
-                let x = correctAnswersAll.sort();
-                let y = answer.value.sort();
-                if (x.length != y.length) answer.isCorrect = false;
-                else {
-                    for (let i = 0; i < x.length; i++) {
-                        if (x[i] != y[i]) {
-                            answer.isCorrect = false;
-                            break;
+                    let correctAnswersAll = [];
+                    for (let choice of question.choices) {
+                        if (choice.isCorrect) correctAnswersAll.push(choice.text);
+                    }
+                    let x = correctAnswersAll.sort();
+                    let y = answer.value.sort();
+                    if (x.length != y.length) answer.isCorrect = false;
+                    else {
+                        for (let i = 0; i < x.length; i++) {
+                            if (x[i] != y[i]) {
+                                answer.isCorrect = false;
+                                break;
+                            }
                         }
                     }
-                }
-                if (answer.isCorrect) this.score += question.points;
-                break;
+                    if (answer.isCorrect) this.score += question.points;
+                    break;
+            }
         }
-    }
 
-    const quiz = await Quiz.findOne({_id: this.quiz});
-    if (quiz.passScore <= this.score) {
-        this.submStatus = 'passed';
-    } else {
-        this.submStatus = 'failed'
-    }
-
-    if (quiz.evaluation == "Latest") {
-        let previousActiveSubmission = await Submission.findOne({quiz: this.quiz, user: this.user, active: true});
-        if (previousActiveSubmission) {
-            previousActiveSubmission.active = false;
-            await previousActiveSubmission.save();
+        const quiz = await Quiz.findOne({_id: this.quiz});
+        if (quiz.passScore <= this.score) {
+            this.submStatus = 'passed';
+        } else {
+            this.submStatus = 'failed'
         }
-        this.active = true;
-    } else if (quiz.evaluation == "Best") {
-        let previousActiveSubmission = await Submission.findOne({quiz: this.quiz, user: this.user, active: true});
-        if (previousActiveSubmission) {
-            if (this.score >= previousActiveSubmission.score) {
-                this.active = true;
+
+        if (quiz.evaluation == "Latest") {
+            let previousActiveSubmission = await Submission.findOne({quiz: this.quiz, user: this.user, active: true});
+            if (previousActiveSubmission) {
                 previousActiveSubmission.active = false;
                 await previousActiveSubmission.save();
             }
-        } else {
             this.active = true;
+        } else if (quiz.evaluation == "Best") {
+            let previousActiveSubmission = await Submission.findOne({quiz: this.quiz, user: this.user, active: true});
+            if (previousActiveSubmission) {
+                if (this.score >= previousActiveSubmission.score) {
+                    this.active = true;
+                    previousActiveSubmission.active = false;
+                    await previousActiveSubmission.save();
+                }
+            } else {
+                this.active = true;
+            }
         }
+        this.save();
+    } catch(err) {
+        this.submStatus = 'cannot evaluate';
+        this.save();
     }
-    this.save();
 }
 
 const Submission = mongoose.model('Submission', submissionSchema);
